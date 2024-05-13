@@ -11,4 +11,3 @@ public class Main {
         stockBroker.setState(false);
     }
 }
-//Testing
