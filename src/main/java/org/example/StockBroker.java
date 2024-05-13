@@ -1,23 +1,22 @@
+package org.example;
 import java.util.ArrayList;
 import java.util.List;
-
 public class StockBroker {
     private List<Observer> observers = new ArrayList<Observer>();
     private boolean state;
-    public boolean getState(){
+    public boolean getState() {
         return state;
     }
-    public void setState(double state){
+    public void setState(boolean state) {
         this.state = state;
-        notifyAll(state);
+        notifyAllObservers();
     }
-    public void add(Observer observer){
+    public void add(Observer observer) {
         observers.add(observer);
     }
-    @Override
-    public void notifyAll(boolean stockGoesUp){
-        for(Observer observer : observers){
-            observer.update(stockGoesUp);
+    private void notifyAllObservers() {
+        for (Observer observer : observers) {
+            observer.update();
         }
     }
 }

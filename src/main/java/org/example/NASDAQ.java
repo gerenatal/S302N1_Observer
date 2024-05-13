@@ -1,12 +1,11 @@
-import javax.security.auth.Subject;
-
+package org.example;
 public class NASDAQ extends Observer {
-    public NASDAQ(Subject subject){
-        this.stockBroker = subject;
+    public NASDAQ(StockBroker stockBroker) {
+        this.stockBroker = stockBroker;
         this.stockBroker.add(this);
     }
     @Override
-    public void update(boolean stockGoesUp){
-        System.out.println("NASDAQ notified: Stock market is " + (stockGoesUp ? "up" : "down"));
+    public void update() {
+        System.out.println("NASDAQ notified: Stock market is " + (stockBroker.getState() ? "up" : "down"));
     }
 }
