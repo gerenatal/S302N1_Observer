@@ -1,22 +1,38 @@
 package org.example;
+
 import java.util.ArrayList;
 import java.util.List;
+
 public class StockBroker {
-    private List<Observer> observers = new ArrayList<Observer>();
-    private boolean state;
-    public boolean getState() {
-        return state;
+    private final List<StockMarketAgency> agencies;
+    private double stockPrice;
+    private boolean stockPriceGoesUp = false;
+
+    public StockBroker() {
+        this.agencies = new ArrayList<>();
     }
-    public void setState(boolean state) {
-        this.state = state;
-        notifyAllObservers();
+
+    public void addObserver(StockMarketAgency agency) {
+        agencies.add(agency);
     }
-    public void add(Observer observer) {
-        observers.add(observer);
+
+    public void removeObserver(StockMarketAgency agency) {
+        agencies.remove(agency);
     }
-    private void notifyAllObservers() {
-        for (Observer observer : observers) {
-            observer.update();
+
+    public void notifyObservers() {
+        for (StockMarketAgency agency : agencies) {
+            agency.update(stockPrice, stockPriceGoesUp);
         }
+    }
+
+    public void setStockPrice(double stockPrice) {
+        stockPriceGoesUp = stockPrice > this.stockPrice;
+        this.stockPrice = stockPrice;
+        notifyObservers();
+    }
+
+    public double getStockPrice() {
+        return stockPrice;
     }
 }
